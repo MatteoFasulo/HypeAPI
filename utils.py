@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
+import os
+import json
 from lxml import html
+
 
 
 def parse_form(data, **fields):
@@ -26,3 +26,11 @@ def loginrequired(func):
             raise Exception("Login required but not yet performed")
         return func(self, *args, **kwargs)
     return wrapper
+
+def save_json(json_data, json_filename: str = 'info.json'):
+    if not os.path.isdir('json'):
+        os.mkdir('json')
+    
+    with open(f"json{os.sep}{json_filename}", 'w', encoding='UTF-8') as outfile:
+        json.dump(json_data, outfile)
+    return True

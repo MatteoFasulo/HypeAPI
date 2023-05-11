@@ -63,7 +63,7 @@ st.dataframe(filtered_movements)
 st.subheader('Charts')
 
 # barchart
-fig = px.bar(filtered_movements.groupby('subType').sum().reset_index().sort_values(by='amount',ascending=False), x='subType', y='amount', color='subType')
+fig = px.bar(filtered_movements[['subType','income','amount']].groupby('subType').sum().reset_index().sort_values(by='amount',ascending=False), x='subType', y='amount', color='subType')
 fig.update_layout(
     xaxis=dict(title='Transaction Type', tickangle=-45),
     yaxis=dict(title='Total Amount ($/EUR)'),

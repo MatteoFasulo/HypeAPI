@@ -5,6 +5,17 @@ Unofficial Python module for interacting with the HYPE card API.
 ## 📝 Notes
 - HYPE only allows the use of one device at a time. Logging in with this module will disconnect you from the application and vice versa.
 
+=======
+Certainly! Here's an updated version of the Markdown text with added emojis and colored formatting for a fancy and good look:
+
+# 🌟 HypeAPI
+
+Unofficial Python module for interacting with the HYPE card API.
+
+## 📝 Notes
+- HYPE only allows the use of one device at a time. Logging in with this module will disconnect you from the application and vice versa.
+
+>>>>>>> ab5904fd087645ce427acc3ff466effa85b8df1d
 ## 🐳 Docker
 `start.sh` will run the python script and then build the image with all the data generated:
 ```sh

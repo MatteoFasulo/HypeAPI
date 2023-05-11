@@ -3,6 +3,9 @@
 # Install requirements.txt
 pip install -r requirements.txt
 
+# Clear the screen
+clear
+
 # Prompt the user for EMAIL
 read -p "Enter your email: " EMAIL
 
@@ -17,6 +20,7 @@ elif command -v python3 &> /dev/null; then
     python3 main.py -m "$EMAIL" -b "$BIRTHDATE"
 else
     echo "Python interpreter not found. Please install Python or Python3."
+    exit 1
 fi
 
 docker build -t hype_dashboard:latest .

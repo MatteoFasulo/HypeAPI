@@ -24,6 +24,13 @@ def load_movements():
     movements['month'] = pd.to_datetime(movements.date).dt.month
     movements['month_name'] = pd.to_datetime(movements.date).dt.month_name()
     movements['year'] = pd.to_datetime(movements.date).dt.year
+    movements.rename(
+        columns={
+            'additionalInfo.category.id': 'category_id', 
+            'additionalInfo.category.name': 'category',
+            },
+        inplace=True,
+    )
     return movements
 
 st.set_page_config(layout='wide')
@@ -61,36 +68,39 @@ st.subheader('Transactions')
 st.dataframe(filtered_movements)
 
 st.subheader('Charts')
+left, right = st.columns(2)
 
-# barchart
-fig = px.bar(filtered_movements[['subType','income','amount']].groupby('subType').sum().reset_index().sort_values(by='amount',ascending=False), x='subType', y='amount', color='subType')
-fig.update_layout(
-    xaxis=dict(title='Transaction Type', tickangle=-45),
-    yaxis=dict(title='Total Amount ($/EUR)'),
-    plot_bgcolor='white',
-    title=dict(text='Total amount per transaction type'),
+with left:
+    # barchart
+    fig = px.bar(filtered_movements[['subType','income','amount']].groupby('subType').sum().reset_index().sort_values(by='amount',ascending=False), x='subType', y='amount', color='subType')
+    fig.update_layout(
+        xaxis=dict(title='Transaction Type', tickangle=-45),
+        yaxis=dict(title='Total Amount ($/EUR)'),
+        plot_bgcolor='white',
+        title=dict(text='Total amount per transaction type'),
+        title_x=0.5,
+        title_y=0.95,
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
+with right:
+    # sunburst
+    subtype_count = filtered_movements.groupby(['subType', 'income']).size().reset_index(name='count')
+    subtype_count['label'] = subtype_count['income'].map({True: 'In', False: 'Out'})
+    fig = px.sunburst(subtype_count, path=['subType', 'label'], values='count',
+                    color='subType',
+                    hover_data=['count'])
+    fig.update_layout(
+    title=dict(text='Movements SubType Sunburst Chart'), 
     title_x=0.5,
     title_y=0.95,
-)
-st.plotly_chart(fig, use_container_width=True)
-
-# sunburst
-subtype_count = filtered_movements.groupby(['subType', 'income']).size().reset_index(name='count')
-subtype_count['label'] = subtype_count['income'].map({True: 'In', False: 'Out'})
-fig = px.sunburst(subtype_count, path=['subType', 'label'], values='count',
-                color='subType',
-                hover_data=['count'])
-fig.update_layout(
-title=dict(text='Movements SubType Sunburst Chart'), 
-title_x=0.5,
-title_y=0.95,
-)
-st.plotly_chart(fig, use_container_width=True)
+    )
+    st.plotly_chart(fig, use_container_width=True)
 
 # scatterplot
 filtered_movements['color'] = filtered_movements['income'].map({True: 'green', False: 'red'})
 fig = px.scatter(filtered_movements, x='date', y='amount', size='amount', color='income',
-                 hover_data=['title', 'subType', 'amount', 'date', 'additionalInfo.category.name'],
+                 hover_data=['title', 'subType', 'amount', 'date', 'category'],
                  color_discrete_map={True: 'green', False: 'red'})
 fig.update_layout(
     xaxis=dict(title='Date'),
@@ -102,18 +112,37 @@ fig.update_layout(
 )
 st.plotly_chart(fig, use_container_width=True)
 
-# 
-grouped_df = filtered_movements.groupby(['year', 'month', 'month_name', 'income'])['amount'].sum().reset_index()
-grouped_df['month_year'] = grouped_df['month_name'] + ' ' + grouped_df['year'].astype(str)
-color_map = {True: 'green', False: 'red'}
+left, right = st.columns(2)
+
+with left:
+    # BarChart income for each month
+    grouped_df = filtered_movements.groupby(['year', 'month', 'month_name', 'income'])['amount'].sum().reset_index()
+    grouped_df['month_year'] = grouped_df['month_name'] + ' ' + grouped_df['year'].astype(str)
+    color_map = {True: 'green', False: 'red'}
 
 
-st.write(grouped_df)
+    fig = px.bar(grouped_df, x='month_year', y='amount', color='income',
+                barmode='group', labels={'income': 'Income'}, title='Monthly Income', color_discrete_map=color_map)
+    fig.update_layout(
+        legend=dict(itemclick='toggle'),
+        clickmode='event+select'
+    )
+    st.plotly_chart(fig, use_container_width=True)
 
-fig = px.bar(grouped_df, x='month_year', y='amount', color='income',
-             barmode='group', labels={'income': 'Income'}, title='Monthly Income', color_discrete_map=color_map)
-fig.update_layout(
-    legend=dict(itemclick='toggle'),
-    clickmode='event+select'
+with right:
+    # PieChart facet wrap for each year
+    fig = px.pie(filtered_movements.groupby(['year', 'income'])['amount'].sum().reset_index(), values='amount', names='income', color='income', title='Income by Year',
+                color_discrete_map={False: 'red', True: 'green'},
+                facet_col='year', facet_col_wrap=2)
+    fig.update_traces(textposition='inside', textinfo='label+percent', showlegend=False)
+    st.plotly_chart(fig, use_container_width=True)
+
+# PieChart transaction category (all years)
+fig = px.pie(filtered_movements[['year', 'amount', 'income', 'category']].groupby('category')['amount'].sum().reset_index(),
+            values='amount',
+            names='category',
+            color='category',
+            title='Amount spent per transaction category',
 )
+fig.update_traces(textposition='inside', textinfo='label+percent', showlegend=False)
 st.plotly_chart(fig, use_container_width=True)

@@ -34,3 +34,9 @@ The contents of this repository are for informational purposes and the result of
 
 ## 🙏 Acknowledgments
 - [@jacopo-j/HypeAPI](https://github.com/jacopo-j/HypeAPI) for the API interface.
+
+## Contributing
+Thank you for considering contributing to the HypeAPI project! Please read the [Contributing Guidelines](CONTRIBUTING.md) for more information on how to contribute.
+
+## Code of Conduct
+We expect all contributors to adhere to the [Code of Conduct](CODE_OF_CONDUCT.md). Please read it to understand the behavior we expect from our community members.

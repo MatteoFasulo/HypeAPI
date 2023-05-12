@@ -76,7 +76,6 @@ class Hype(Banking):
             raise self.AuthenticationError("Missing data in response for bioToken request")
         self.bin = enroll2.json()["Bin"]
         self._username = username
-        return True
 
     def otp2fa(self, code):
         if self._username is None:
@@ -109,7 +108,6 @@ class Hype(Banking):
             "newids": self.newids,
             "App-Version": self.APP_VERSION
         })
-        return True
 
     @loginrequired
     def renew(self):

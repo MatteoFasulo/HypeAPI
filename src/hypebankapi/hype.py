@@ -1,9 +1,10 @@
-from banking import Banking
-from uuid import uuid4
 import json
 import requests
-from utils import loginrequired
 from datetime import datetime, date
+from uuid import uuid4
+
+from .banking import Banking
+from .utils import loginrequired
 
 
 class Hype(Banking):

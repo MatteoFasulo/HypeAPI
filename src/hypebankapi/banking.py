@@ -1,10 +1,8 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 from abc import ABC, abstractmethod
-from utils import loginrequired
 import requests
 import json
+
+from .utils import loginrequired
 
 
 class Banking(ABC):

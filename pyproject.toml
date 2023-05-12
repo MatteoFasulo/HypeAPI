@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "hypeAPI"
+name = "HypeBankAPI"
 version = "0.0.1"
 authors = [
   { name="Matteo Fasulo", email="mat.fasulo@gmail.com" },

@@ -5,6 +5,11 @@ Unofficial Python module for interacting with the HYPE card API.
 ## 📝 Notes
 - HYPE only allows the use of one device at a time. Logging in with this module will disconnect you from the application and vice versa.
 
+## Pypi
+```python
+pip install -U HypeBankAPI
+```
+
 ## 🚀 Usage
 ```python
 from hypebankapi import Hype, utils

@@ -10,6 +10,18 @@ Unofficial Python module for interacting with the HYPE card API.
 pip install -U HypeBankAPI
 ```
 
+## Command Line Interface
+`hypebankapi` supports argparse for command line arguments:
+```python
+python -m hypebankapi -m EMAIL -b BIRTHDATE [-l LIMIT] [-v]
+```
+The module is invoked using the following command-line arguments:
+- `-m EMAIL`, `--email EMAIL`: Specifies the email address. It is a required argument.
+- `-b BIRTHDATE`, `--birthdate BIRTHDATE`: Specifies the birth date. It is a required argument.
+- `-l LIMIT`, `--limit LIMIT`: Limit the number of transactions to fetch from Hype API. Default to 50. It is an optional argument.
+- `-v`, `--verbose`: Enables verbose output. It is an optional flag argument.
+>Tip: If you encountered an error while running the command try `python3 -m hypebankapi`
+
 ## 🚀 Usage
 ```python
 from hypebankapi import Hype, utils

@@ -5,15 +5,23 @@ from .banking import Banking
 from .hype import Hype
 from .utils import save_json
 
+
 def main():
+    """
+    Main function to fetch data from Hype API and create JSON folder with profile, balance, card, and movements information.
+    """
     parser = argparse.ArgumentParser(
         prog="HypeBankAPI",
         description='Fetch data from Hype API and create JSON folder with profile, balance, card and movements information'
     )
-    parser.add_argument('-m', '--email', help='Email address', required=True, type=str)
-    parser.add_argument('-b', '--birthdate', help='Birth date in ISO (YYYY-MM-DD)', required=True)
-    parser.add_argument('-l', '--limit', help='Limit the number of transactions to fetch from Hype API. Default to 50', required=False, default=50, type=int)
-    parser.add_argument('-v', '--verbose', action='store_true', required=False, default=False)
+    parser.add_argument('-m', '--email', help='Email address',
+                        required=True, type=str)
+    parser.add_argument('-b', '--birthdate',
+                        help='Birth date in ISO (YYYY-MM-DD)', required=True)
+    parser.add_argument('-l', '--limit', help='Limit the number of transactions to fetch from Hype API. Default to 50',
+                        required=False, default=50, type=int)
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        required=False, default=False)
 
     args = parser.parse_args()
 
@@ -21,7 +29,7 @@ def main():
 
     h = Hype()
     h.login(args.email, password, args.birthdate)
-    
+
     if args.verbose:
         print('Logged in. Waiting for OTP code...\n')
 

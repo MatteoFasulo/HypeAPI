@@ -28,9 +28,20 @@ def loginrequired(func):
     return wrapper
 
 def save_json(json_data, json_filename: str = 'info.json'):
+    """
+    Saves JSON data to a file.
+
+    Args:
+    - json_data: The JSON data to be saved.
+    - json_filename: The name of the JSON file (default: 'info.json').
+
+    Returns:
+    - bool: True if the JSON data is successfully saved.
+
+    """
     if not os.path.isdir('json'):
         os.mkdir('json')
-    
+
     with open(f"json{os.sep}{json_filename}", 'w', encoding='UTF-8') as outfile:
         json.dump(json_data, outfile)
     return True

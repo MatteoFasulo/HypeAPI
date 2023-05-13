@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "HypeBankAPI"
-version = "1.0.1"
+version = "1.0.2"
 authors = [
   { name="Matteo Fasulo", email="mat.fasulo@gmail.com" },
 ]
@@ -19,8 +19,8 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "lxml ~=4.9.2",
-    "requests ~=2.30.0",
+    "lxml",
+    "requests",
 ]
 
 [project.urls]

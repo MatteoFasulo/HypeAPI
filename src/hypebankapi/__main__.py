@@ -5,8 +5,7 @@ from .banking import Banking
 from .hype import Hype
 from .utils import save_json
 
-
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(
         prog="HypeAPI",
         description='Fetch data from Hype API and create JSON folder with profile, balance, card and movements information'
@@ -15,12 +14,14 @@ if __name__ == "__main__":
     parser.add_argument('-b', '--birthdate', help='Birth date in ISO (YYYY-MM-DD)', required=True)
     parser.add_argument('-l', '--limit', help='Limit the number of transactions to fetch from Hype API. Default to 50', required=False, default=50, type=int)
     parser.add_argument('-v', '--verbose', action='store_true', required=False, default=False)
+    
     args = parser.parse_args()
 
     password = getpass('Hype password: ')
 
     h = Hype()
     h.login(args.email, password, args.birthdate)
+    
     if args.verbose:
         print('Logged in. Waiting for OTP code...\n')
 
@@ -40,7 +41,12 @@ if __name__ == "__main__":
         save_json(movements, 'movements.json')
         if args.verbose:
             print('JSON folder created!')
+
     except Banking.AuthenticationFailure:
         # Token has expired
         h.renew()
         print('Renew Token')
+
+
+if __name__ == "__main__":
+    main()

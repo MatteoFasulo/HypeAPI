@@ -16,11 +16,11 @@ from hypebankapi import Hype, utils
 from getpass import getpass
 
 h = Hype()
-h.login(EMAIL, getpass(), BIRTH-DATE) # Change EMAIL and BIRTH-DATE
+h.login(EMAIL, getpass('Hype password: '), BIRTH-DATE) # Change EMAIL and BIRTH-DATE
 
 # Wait for OTP code to arrive via SMS
 
-h.otp2fa(int(input("OTP: ")))
+h.otp2fa(input("OTP: "))
 
 profile = h.get_profile()
 balance = h.get_balance()

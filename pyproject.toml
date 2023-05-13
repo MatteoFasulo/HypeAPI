@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "HypeBankAPI"
-version = "1.1.0"
+version = "1.2.0"
 authors = [
   { name="Matteo Fasulo", email="mat.fasulo@gmail.com" },
 ]

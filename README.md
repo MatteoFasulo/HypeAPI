@@ -1,4 +1,4 @@
-# 🌟 HypeAPI
+# 🌟 HypeBankAPI
 
 Unofficial Python module for interacting with the HYPE card API.
 
